@@ -1,9 +1,7 @@
-<!DOCTYPE html>
-
 <html class="dark" lang="pt-PT"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
-<title>C&amp;N Acabamentos - Drywall Pro SPA</title>
+<title>Drywall Pro - C&amp;N Acabamentos</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
@@ -23,6 +21,10 @@
                             surface: '#1a1919',
                             card: '#242424',
                             border: 'rgba(255,255,255,0.05)'
+                        },
+                        coral: {
+                            DEFAULT: '#ff7f50',
+                            soft: 'rgba(255, 127, 80, 0.1)'
                         }
                     },
                     fontFamily: {
@@ -34,38 +36,36 @@
         }
     </script>
 <style>
-        body { font-family: 'Manrope', sans-serif; background-color: #0e0e0e; color: #e2e2e2; }
+        body { font-family: 'Manrope', sans-serif; background-color: #0e0e0e; color: #e2e2e2; -webkit-tap-highlight-color: transparent; }
         .active-tab { color: #d4af37; }
         .active-tab .material-symbols-outlined { font-variation-settings: 'FILL' 1; }
         
-        .drawer-active {
-            background-color: rgba(255, 255, 255, 0.05);
-            color: #d4af37;
-        }
-        .drawer-active .material-symbols-outlined {
-            color: #d4af37;
-            font-variation-settings: 'FILL' 1;
-        }
-
-        .hidden { display: none; }
-        .drawer-transition { transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .drawer-transition { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .overlay-transition { transition: opacity 0.4s ease; }
+        
         input:focus, select:focus { outline: none; border-color: #d4af37 !important; }
         .whatsapp-gradient { background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); }
         .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         
-        .nav-transition { transition: all 0.2s ease-in-out; }
+        @media print {
+            body * { visibility: hidden; }
+            #invoice-print-area, #invoice-print-area * { visibility: visible; }
+            #invoice-print-area { position: absolute; left: 0; top: 0; width: 100%; background: white !important; color: black !important; padding: 40px !important; }
+            .no-print { display: none !important; }
+        }
 
-        input[type="checkbox"]:checked {
-            background-color: #d4af37;
-            border-color: #d4af37;
+        .pulse-alert { animation: pulse 2s infinite; }
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
         }
     </style>
 </head>
-<body class="pb-24 overflow-x-hidden selection:bg-gold selection:text-obsidian">
+<body class="pb-40 overflow-x-hidden selection:bg-gold selection:text-obsidian">
 <!-- SIDE NAVIGATION DRAWER -->
-<div class="fixed inset-0 z-[60] pointer-events-none" id="side-drawer">
-<div class="absolute inset-0 bg-black/80 opacity-0 transition-opacity duration-300 pointer-events-none" id="drawer-overlay" onclick="toggleDrawer()"></div>
+<div class="fixed inset-0 z-[100] pointer-events-none" id="side-drawer">
+<div class="absolute inset-0 bg-black/80 opacity-0 overlay-transition pointer-events-none" id="drawer-overlay" onclick="toggleDrawer()"></div>
 <aside class="absolute top-0 left-0 h-full w-[280px] bg-obsidian-surface border-r border-obsidian-border -translate-x-full drawer-transition pointer-events-auto flex flex-col" id="drawer-content">
 <div class="p-6 border-b border-obsidian-border flex items-center gap-3">
 <div class="w-10 h-10 bg-gold rounded flex items-center justify-center">
@@ -76,42 +76,31 @@
 <p class="text-[9px] text-white/40 uppercase tracking-widest mt-1">Industrial Architect</p>
 </div>
 </div>
-<nav class="flex-1 p-4 space-y-1">
-<button class="w-full flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors group" id="drawer-nav-dashboard" onclick="switchView('dashboard'); toggleDrawer()">
+<nav class="flex-1 p-4 space-y-1 mt-4">
+<button class="w-full flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors group" onclick="switchView('dashboard'); toggleDrawer()">
 <span class="material-symbols-outlined text-white/60 group-hover:text-gold transition-colors">dashboard</span>
 <span class="text-sm font-semibold">Painel Principal</span>
 </button>
-<button class="w-full flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors group" id="drawer-nav-new-estimate" onclick="switchView('new-estimate'); toggleDrawer()">
+<button class="w-full flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors group" onclick="switchView('new-estimate'); toggleDrawer()">
 <span class="material-symbols-outlined text-white/60 group-hover:text-gold transition-colors">calculate</span>
 <span class="text-sm font-semibold">Novo Orçamento</span>
 </button>
-<button class="w-full flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors group" id="drawer-nav-shopping-list" onclick="switchView('shopping-list'); toggleDrawer()">
+<button class="w-full flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors group" onclick="switchView('shopping-list'); toggleDrawer()">
 <span class="material-symbols-outlined text-white/60 group-hover:text-gold transition-colors">inventory_2</span>
 <span class="text-sm font-semibold">Lista de Materiais</span>
 </button>
-<button class="w-full flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors group" id="drawer-nav-team" onclick="switchView('team'); toggleDrawer()">
+<button class="w-full flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors group" onclick="switchView('team'); toggleDrawer()">
 <span class="material-symbols-outlined text-white/60 group-hover:text-gold transition-colors">groups</span>
 <span class="text-sm font-semibold">Gestão de Equipa</span>
 </button>
-<button class="w-full flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors group" id="drawer-nav-receipts" onclick="switchView('receipts'); toggleDrawer()">
+<button class="w-full flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors group" onclick="switchView('receipts'); toggleDrawer()">
 <span class="material-symbols-outlined text-white/60 group-hover:text-gold transition-colors">receipt_long</span>
 <span class="text-sm font-semibold">Relatórios Financeiros</span>
 </button>
 </nav>
 <div class="p-6 border-t border-obsidian-border">
-<div class="flex flex-col items-center gap-4">
-<div class="flex items-center gap-3">
-<button class="text-[10px] text-gold hover:text-gold-light transition-colors uppercase font-black tracking-widest">Termos</button>
-<span class="text-white/10 text-xs font-light">|</span>
-<button class="text-[10px] text-gold hover:text-gold-light transition-colors uppercase font-black tracking-widest">Privacidade</button>
-</div>
-<div class="space-y-1.5 text-center">
-<p class="text-[9px] text-white/40 uppercase tracking-widest leading-relaxed font-medium">C&amp;N Acabamento LDA &amp; J.QUISSAMA</p>
-<p class="text-[10px] text-white/60 font-bold flex items-center justify-center gap-1.5 uppercase tracking-tighter">
-                            Com <span class="text-red-500/80 text-xs">❤️</span> Huíla
-                        </p>
-</div>
-</div>
+<p class="text-[9px] text-white/40 uppercase tracking-widest leading-relaxed text-center mb-2">C&amp;N ACABAMENTO LDA &amp; J.QUISSAMA</p>
+<p class="text-[10px] text-gold font-bold text-center">Com ❤️ Huíla</p>
 </div>
 </aside>
 </div>
@@ -124,14 +113,68 @@
 <h1 class="font-manrope font-extrabold tracking-tighter text-gold text-lg uppercase">Drywall Pro</h1>
 </div>
 <div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-white/40">notifications</span>
-<div class="w-9 h-9 rounded-full bg-obsidian-card border border-gold/20 flex items-center justify-center overflow-hidden text-lg">
-                👷🏽‍♂️
-            </div>
+<button class="relative w-10 h-10 flex items-center justify-center rounded-full hover:bg-white/5 transition-colors" onclick="openModal('notifications-modal')">
+<span class="material-symbols-outlined text-white/40" id="notification-icon">notifications</span>
+<div class="absolute top-2.5 right-2.5 w-2 h-2 bg-coral rounded-full hidden" id="pending-alert-dot"></div>
+</button>
+<button class="w-9 h-9 rounded-full bg-obsidian-card border border-gold/20 flex items-center justify-center overflow-hidden text-lg hover:border-gold transition-colors active:scale-95" onclick="openModal('settings-modal')">👷🏽‍♂️</button>
 </div>
 </header>
+<!-- NOTIFICATIONS MODAL -->
+<div class="fixed inset-0 z-[120] bg-black/95 backdrop-blur-md hidden overflow-y-auto p-4 flex items-center justify-center" id="notifications-modal">
+<div class="max-w-md w-full bg-obsidian-surface rounded-3xl border border-white/10 shadow-2xl relative overflow-hidden animate-in fade-in zoom-in duration-300">
+<div class="p-8">
+<div class="flex items-center justify-between mb-8">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-gold/10 rounded-2xl flex items-center justify-center text-gold">
+<span class="material-symbols-outlined">notifications_active</span>
+</div>
+<h3 class="text-xl font-manrope font-black text-white">Alertas</h3>
+</div>
+<button class="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center text-white/60" onclick="closeModal('notifications-modal')">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<div class="space-y-3" id="notifications-list">
+<!-- Dynamic -->
+</div>
+</div>
+</div>
+</div>
+<!-- COMPANY SETTINGS MODAL -->
+<div class="fixed inset-0 z-[120] bg-black/95 backdrop-blur-md hidden overflow-y-auto p-4 flex items-center justify-center" id="settings-modal">
+<div class="max-w-md w-full bg-obsidian-surface rounded-3xl border border-white/10 shadow-2xl relative overflow-hidden">
+<div class="p-8">
+<div class="flex items-center justify-between mb-8">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-gold/10 rounded-2xl flex items-center justify-center text-gold">
+<span class="material-symbols-outlined">business_center</span>
+</div>
+<h3 class="text-xl font-manrope font-black text-white">Definições</h3>
+</div>
+<button class="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center text-white/60" onclick="closeModal('settings-modal')">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<div class="space-y-6">
+<div>
+<p class="text-[9px] font-bold text-white/30 uppercase tracking-widest mb-2">Designação Social</p>
+<p class="text-sm font-semibold text-white bg-white/5 p-4 rounded-xl border border-white/5">C&amp;N Acabamento LDA &amp; J.QUISSAMA</p>
+</div>
+<div>
+<p class="text-[9px] font-bold text-white/30 uppercase tracking-widest mb-2">NIF</p>
+<p class="text-sm font-semibold text-white bg-white/5 p-4 rounded-xl border border-white/5">5171161615</p>
+</div>
+<div class="pt-4 flex gap-3">
+<button class="flex-1 bg-white/5 border border-white/10 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest" onclick="openModal('terms-modal')">Termos</button>
+<button class="flex-1 bg-white/5 border border-white/10 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest" onclick="openModal('privacy-modal')">Privacidade</button>
+</div>
+</div>
+</div>
+</div>
+</div>
 <!-- MAIN SPA CONTENT -->
-<main class="pt-20 px-4 max-w-lg mx-auto pb-40">
+<main class="pt-24 px-4 max-w-lg mx-auto">
 <!-- DASHBOARD VIEW -->
 <section class="view-section space-y-6" id="dashboard">
 <div class="mb-2">
@@ -139,43 +182,30 @@
 <h2 class="text-3xl font-manrope font-black text-white">Olá, C&amp;N</h2>
 </div>
 <div class="grid grid-cols-2 gap-4">
-<div class="bg-obsidian-card p-5 rounded-2xl border border-obsidian-border relative overflow-hidden group">
-<div class="absolute -right-4 -top-4 opacity-5 group-hover:opacity-10 transition-opacity">
-<span class="material-symbols-outlined text-6xl">square_foot</span>
-</div>
+<div class="bg-obsidian-card p-5 rounded-2xl border border-obsidian-border">
 <p class="text-[10px] uppercase font-bold text-white/40 tracking-wider mb-2">Área Total</p>
 <p class="text-2xl font-manrope font-black text-gold"><span id="dashArea">0</span> <span class="text-xs text-white/60">m²</span></p>
-<p class="text-[10px] text-white/20 mt-2 uppercase tracking-tighter italic" id="dashAreaStatus">Nenhuma medição registada</p>
+<p class="text-[10px] text-white/20 mt-2 uppercase tracking-tighter italic" id="dashAreaStatus">Nenhuma medição</p>
 </div>
-<div class="bg-obsidian-card p-5 rounded-2xl border border-obsidian-border relative overflow-hidden group">
-<div class="absolute -right-4 -top-4 opacity-5 group-hover:opacity-10 transition-opacity">
-<span class="material-symbols-outlined text-6xl">payments</span>
-</div>
-<p class="text-[10px] uppercase font-bold text-white/40 tracking-wider mb-2">Faturação</p>
+<div class="bg-obsidian-card p-5 rounded-2xl border border-obsidian-border">
+<p class="text-[10px] uppercase font-bold text-white/40 tracking-wider mb-2">Faturação Bruta</p>
 <p class="text-2xl font-manrope font-black text-gold"><span id="dashRevenue">0</span> <span class="text-xs text-white/60 text-gold/60">Kz</span></p>
-<p class="text-[10px] text-white/40 mt-2 uppercase">Kwanza Angolano</p>
+<p class="text-[10px] text-white/40 mt-2 uppercase">Inclui IVA 14%</p>
 </div>
 </div>
 <button class="w-full bg-gold hover:bg-gold-light text-obsidian font-manrope font-black py-4 rounded-xl flex items-center justify-center gap-2 transition-transform active:scale-95 shadow-lg shadow-gold/20" onclick="switchView('new-estimate')">
-<span class="material-symbols-outlined font-bold">add_circle</span>
-                NOVO ORÇAMENTO
-            </button>
+<span class="material-symbols-outlined font-bold">add_circle</span> NOVO ORÇAMENTO
+        </button>
 <div>
-<div class="flex items-center justify-between mb-4 px-1">
-<h3 class="text-[10px] uppercase font-bold text-white/40 tracking-widest">Obras Recentes</h3>
-</div>
+<h3 class="text-[10px] uppercase font-bold text-white/40 tracking-widest mb-4 px-1">Obras Recentes</h3>
 <div class="space-y-3" id="recent-works-list">
-<div class="bg-obsidian-card/40 border border-dashed border-white/10 rounded-2xl p-8 text-center">
-<span class="material-symbols-outlined text-3xl text-white/10 mb-2">inventory</span>
-<p class="text-[10px] text-white/30 uppercase font-bold">Sem obras registadas</p>
-</div>
+<!-- Dynamic -->
 </div>
 </div>
 <div class="pt-8 flex justify-center">
-<button class="text-[9px] uppercase font-bold text-white/20 hover:text-red-500/60 transition-colors tracking-widest flex items-center gap-1.5 py-2 px-4 rounded-lg border border-transparent hover:border-red-500/20" onclick="clearAllData()">
-<span class="material-symbols-outlined text-xs">refresh</span>
-                    Reset Total
-                </button>
+<button class="text-[9px] uppercase font-bold text-white/20 hover:text-red-500/60 transition-colors tracking-widest flex items-center gap-1.5 py-2 px-4 rounded-lg" onclick="clearAllData()">
+<span class="material-symbols-outlined text-xs">refresh</span> Reset Total
+            </button>
 </div>
 </section>
 <!-- NEW ESTIMATE VIEW -->
@@ -190,28 +220,24 @@
 </button>
 </div>
 <div class="bg-obsidian-surface p-6 rounded-2xl border border-obsidian-border space-y-6">
-<div class="space-y-4">
-<div class="grid grid-cols-2 gap-4">
-<div class="col-span-1">
+<div class="grid grid-cols-1 gap-4">
+<div>
 <label class="text-[10px] uppercase font-bold text-white/40 tracking-wider mb-2 block">Nome do Cliente</label>
-<input class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm transition-colors text-white placeholder:text-white/20" id="clientName" placeholder="Ex: Paulo Java" type="text"/>
+<input class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder:text-white/20" id="clientName" placeholder="Ex: Paulo Java" type="text"/>
 </div>
-<div class="col-span-1">
-<label class="text-[10px] uppercase font-bold text-white/40 tracking-wider mb-2 block">Telemóvel</label>
-<input class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm transition-colors text-white placeholder:text-white/20" id="clientPhone" placeholder="Ex: 923..." type="tel"/>
-</div>
-</div>
-<div class="space-y-4">
+<div>
 <label class="text-[10px] uppercase font-bold text-white/40 tracking-wider mb-2 block">Localização</label>
-<input class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm transition-colors text-white placeholder:text-white/20" id="location" oninput="formatLocation(this)" placeholder="Ex: Centralidade da Quilemba" type="text"/>
+<input class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder:text-white/20" id="location" oninput="this.value = this.value.toUpperCase()" placeholder="Ex: CENTRALIDADE DA QUILEMBA" type="text"/>
 </div>
 <div class="grid grid-cols-2 gap-4">
 <div>
-<label class="text-[10px] uppercase font-bold text-white/40 tracking-wider mb-2 block">Material Base</label>
-<select class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm appearance-none text-white" id="material" onchange="calculateTotal()">
-<option disabled="" selected="" value="0">Selecionar</option>
-<option value="3000">Pladur (3.000 Kz/m²)</option>
-<option value="2500">PVC (2.500 Kz/m²)</option>
+<label class="text-[10px] uppercase font-bold text-white/40 tracking-wider mb-2 block">Serviço Principal</label>
+<select class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white appearance-none" id="material" onchange="calculateTotal()">
+<option value="3000">Teto Pladur (3k)</option>
+<option value="2500">Teto PVC (2.5k)</option>
+<option value="2350">Estucar (2.3k)</option>
+<option value="50000">Rack Simples (50k)</option>
+<option value="90000">Rack TV Parede (90k)</option>
 </select>
 </div>
 <div>
@@ -220,569 +246,511 @@
 </div>
 </div>
 <div>
-<label class="text-[10px] uppercase font-bold text-white/40 tracking-wider mb-2 block">Serviços Adicionais (2.500 Kz/m² cada)</label>
-<div class="grid grid-cols-2 gap-2">
-<label class="flex items-center gap-3 bg-white/5 p-3 rounded-lg border border-white/10 cursor-pointer">
-<input class="rounded border-white/20 bg-transparent text-gold" name="service" onchange="calculateTotal()" type="checkbox"/>
-<span class="text-xs font-bold text-white/60">Pintura</span>
+<label class="text-[10px] uppercase font-bold text-white/40 tracking-wider mb-2 block">Serviços Adicionais (Kz/m²)</label>
+<div class="space-y-2">
+<label class="flex items-center justify-between bg-white/5 p-3 rounded-xl border border-white/10">
+<span class="text-xs text-white/60">Pintura (2.500)</span>
+<input class="rounded bg-transparent text-gold" id="service-painting" onchange="calculateTotal()" type="checkbox"/>
 </label>
-<label class="flex items-center gap-3 bg-white/5 p-3 rounded-lg border border-white/10 cursor-pointer">
-<input class="rounded border-white/20 bg-transparent text-gold" name="service" onchange="calculateTotal()" type="checkbox"/>
-<span class="text-xs font-bold text-white/60">Sancas</span>
+<label class="flex items-center justify-between bg-white/5 p-3 rounded-xl border border-white/10">
+<span class="text-xs text-white/60">Sancas (2.500)</span>
+<input class="rounded bg-transparent text-gold" id="service-sancas" onchange="calculateTotal()" type="checkbox"/>
+</label>
+<label class="flex items-center justify-between bg-white/5 p-3 rounded-xl border border-white/10">
+<span class="text-xs text-white/60">Eletricidade (1.200)</span>
+<input class="rounded bg-transparent text-gold" id="service-electricity" onchange="calculateTotal()" type="checkbox"/>
 </label>
 </div>
 </div>
+<div class="bg-gold p-6 rounded-2xl">
+<p class="text-[10px] uppercase font-black text-obsidian/60 mb-1">Total Estimado (+14% IVA)</p>
+<div class="flex items-baseline gap-1">
+<span class="text-3xl font-manrope font-black text-obsidian" id="totalDisplay">0</span>
+<span class="text-xs font-bold text-obsidian/60 uppercase">Kz</span>
 </div>
-<div class="bg-obsidian-card p-5 rounded-2xl border-l-4 border-gold mt-6">
-<p class="text-[10px] uppercase font-bold text-white/40 mb-2">Resumo do Investimento</p>
-<div class="flex justify-between items-baseline mb-4">
-<span class="text-4xl font-manrope font-black text-gold" id="totalDisplay">0</span>
-<span class="text-lg font-bold text-gold/60">Kz</span>
-</div>
-<div class="grid grid-cols-2 gap-4 border-t border-white/5 pt-4">
-<div>
-<label class="text-[9px] uppercase font-bold text-white/40 block mb-1">Adiantamento</label>
-<input class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm font-bold text-white focus:border-gold transition-colors" id="payment" oninput="calculateTotal()" placeholder="0" type="number"/>
-</div>
-<div class="text-right">
-<label class="text-[9px] uppercase font-bold text-white/40 block mb-1">Saldo em Dívida</label>
-<p class="text-sm font-black text-white/20 mt-2" id="debtDisplay">0 Kz</p>
+<div class="mt-4 pt-4 border-t border-black/5">
+<label class="text-[9px] uppercase font-black text-obsidian/40 block mb-1">Adiantamento Pago</label>
+<input class="w-full bg-black/10 border-0 rounded-lg px-3 py-2 text-sm font-bold text-obsidian focus:ring-0" id="payment" oninput="calculateTotal()" placeholder="0" type="number"/>
 </div>
 </div>
 </div>
 </div>
-<div class="flex flex-col gap-3">
-<button class="w-full bg-gold text-obsidian font-manrope font-black py-4 rounded-xl flex items-center justify-center gap-3 active:scale-95 shadow-xl transition-all uppercase tracking-widest text-xs" onclick="saveWork()">
-<span class="material-symbols-outlined">save</span>
-                    Confirmar e Guardar Obra
-                </button>
-<button class="w-full whatsapp-gradient text-white font-manrope font-black py-5 rounded-xl flex items-center justify-center gap-3 active:scale-95 shadow-xl transition-all uppercase tracking-widest text-xs" onclick="sendWhatsApp()">
-<svg class="w-5 h-5 fill-current" viewbox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"></path></svg>
-                    ENVIAR ORÇAMENTO VIA WHATSAPP
-                </button>
-<button class="w-full bg-white/5 text-white/40 font-bold py-4 rounded-xl text-[10px] uppercase tracking-widest transition-colors hover:bg-white/10" onclick="resetForm(); switchView('dashboard')">Limpar Dados</button>
-</div>
+<button class="w-full bg-white text-obsidian font-black py-4 rounded-xl flex items-center justify-center gap-3 active:scale-95 uppercase tracking-widest text-xs" onclick="saveWork()">
+<span class="material-symbols-outlined">save</span> Guardar Obra
+        </button>
 </section>
-<!-- TEAM MANAGEMENT VIEW -->
+<!-- TEAM VIEW -->
 <section class="view-section hidden space-y-6" id="team">
-<div class="mb-4">
+<div>
 <h2 class="text-3xl font-manrope font-black text-white uppercase tracking-tight">Equipa</h2>
 <p class="text-[10px] text-white/40 font-bold uppercase tracking-widest mt-1">Gestão de Pessoal Ativo</p>
 </div>
-<div class="bg-obsidian-card p-5 rounded-2xl border border-obsidian-border space-y-4 mb-6">
-<p class="text-[10px] uppercase font-bold text-gold tracking-widest">Adicionar Colaborador</p>
+<div class="bg-obsidian-card p-5 rounded-2xl border border-obsidian-border space-y-4">
+<p class="text-[10px] uppercase font-bold text-gold tracking-widest">Novo Colaborador</p>
 <div class="grid grid-cols-2 gap-3">
-<input class="w-full bg-obsidian-surface border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder:text-white/20" id="memberName" placeholder="Nome" type="text"/>
+<input class="w-full bg-obsidian-surface border border-white/10 rounded-xl px-4 py-3 text-sm text-white" id="memberName" placeholder="Nome" type="text"/>
 <select class="w-full bg-obsidian-surface border border-white/10 rounded-xl px-4 py-3 text-sm text-white" id="memberRole">
+<option value="Diretor Geral">Diretor Geral</option>
 <option value="Mestre">Mestre</option>
+<option value="Técnico">Técnico</option>
 <option value="Ajudante">Ajudante</option>
-<option value="Pintor">Pintor</option>
 </select>
 </div>
-<button class="w-full bg-gold/10 text-gold py-3 rounded-xl text-xs font-black uppercase tracking-widest border border-gold/20 active:scale-95 transition-transform" onclick="addMember()">Adicionar à Equipa</button>
+<button class="w-full bg-gold/10 text-gold py-3 rounded-xl text-xs font-black uppercase tracking-widest border border-gold/20" onclick="addMember()">Adicionar</button>
 </div>
-<div class="flex gap-4 overflow-x-auto pb-4 no-scrollbar">
-<div class="min-w-[140px] bg-obsidian-card p-4 rounded-xl border-l-2 border-gold">
-<p class="text-[10px] font-bold text-white/40 uppercase mb-1">Total</p>
-<p class="text-2xl font-black" id="teamCountTotal">0</p>
-</div>
-<div class="min-w-[140px] bg-obsidian-card p-4 rounded-xl border-l-2 border-white/10">
-<p class="text-[10px] font-bold text-white/40 uppercase mb-1">Status</p>
-<p class="text-2xl font-black text-white/20 uppercase text-xs">Operacional</p>
-</div>
-</div>
-<div class="space-y-4" id="team-list">
-<!-- Dynamic members list -->
+<div class="space-y-3" id="team-list">
+<!-- Dynamic -->
 </div>
 </section>
 <!-- RECEIPTS VIEW -->
 <section class="view-section hidden space-y-6" id="receipts">
-<div class="mb-4">
-<h2 class="text-3xl font-manrope font-black text-white">Relatórios Financeiros</h2>
-<p class="text-[10px] text-white/40 font-bold uppercase tracking-widest mt-1">Histórico de Faturamento</p>
+<div>
+<h2 class="text-3xl font-manrope font-black text-white uppercase tracking-tight">Faturas</h2>
+<p class="text-[10px] text-white/40 font-bold uppercase tracking-widest mt-1">Gestão Financeira</p>
 </div>
-<div class="grid grid-cols-2 gap-4">
 <div class="bg-obsidian-card p-6 rounded-2xl border-l-4 border-gold">
-<p class="text-[10px] uppercase font-bold text-white/40 mb-2">Total Recebido</p>
+<p class="text-[10px] uppercase font-bold text-white/40 mb-1 tracking-widest">Total em Dívida</p>
 <div class="flex items-baseline gap-1">
-<span class="text-2xl font-manrope font-black text-gold" id="receiptTotalDisplay">0</span>
-<span class="text-[9px] font-bold text-gold/60 uppercase">Kz</span>
+<span class="text-3xl font-manrope font-black text-red-400" id="totalDebtDisplay">0</span>
+<span class="text-xs font-bold text-red-400/60 uppercase">Kz</span>
 </div>
 </div>
-<div class="bg-obsidian-card p-6 rounded-2xl border-l-4 border-red-500/50">
-<p class="text-[10px] uppercase font-bold text-white/40 mb-2">Total em Dívida</p>
-<div class="flex items-baseline gap-1">
-<span class="text-2xl font-manrope font-black text-red-400" id="totalDebtDisplay">0</span>
-<span class="text-[9px] font-bold text-red-400/60 uppercase">Kz</span>
-</div>
-</div>
-</div>
-<div class="space-y-4 pt-4">
-<h3 class="text-[10px] uppercase font-bold text-white/40 tracking-widest px-1">Pagamentos Recentes</h3>
-<div class="space-y-3" id="receipts-list">
-<!-- Dynamic receipts -->
-</div>
+<div class="space-y-4" id="receipts-list">
+<!-- Dynamic -->
 </div>
 </section>
 <!-- SHOPPING LIST VIEW -->
 <section class="view-section hidden space-y-6" id="shopping-list">
-<div class="flex items-center justify-between mb-4">
 <div>
-<h2 class="text-2xl font-manrope font-black text-white">Logística de Obra</h2>
-<p class="text-[10px] text-white/40 font-bold uppercase tracking-widest mt-1">Controlo de Materiais</p>
-</div>
-<button class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white" onclick="switchView('dashboard')">
-<span class="material-symbols-outlined">arrow_back</span>
-</button>
+<h2 class="text-3xl font-manrope font-black text-white uppercase tracking-tight">Logística</h2>
+<p class="text-[10px] text-white/40 font-bold uppercase tracking-widest mt-1">Cálculo de Materiais (Margem 10%)</p>
 </div>
 <div class="space-y-3" id="material-list-container">
-<!-- Items generated via JS based on last estimate -->
-</div>
-<div class="hidden" id="shopping-actions">
-<button class="w-full bg-obsidian-card border border-gold/30 hover:border-gold text-gold font-manrope font-bold py-4 rounded-xl flex items-center justify-center gap-3 active:scale-95 transition-all uppercase tracking-widest text-[10px]" onclick="copyShoppingList()">
-<span class="material-symbols-outlined text-lg">content_copy</span>
-                    Copiar Lista para Compra
-                </button>
+<!-- Dynamic -->
 </div>
 </section>
 </main>
+<!-- WORK DETAILS MODAL -->
+<div class="fixed inset-0 z-[150] bg-black/95 backdrop-blur-xl hidden overflow-y-auto p-4 flex items-center justify-center" id="work-details-modal">
+<div class="max-w-lg w-full bg-obsidian-surface rounded-3xl border border-white/10 shadow-2xl relative overflow-hidden">
+<div class="p-8">
+<div class="flex items-center justify-between mb-8">
+<div>
+<h3 class="text-xs font-black text-gold uppercase tracking-[0.2em] mb-1">Ficha de Obra</h3>
+<p class="text-xl font-manrope font-black text-white" id="modal-client-name">Cliente</p>
+</div>
+<button class="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center text-white/60" onclick="closeModal('work-details-modal')">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<div class="space-y-6">
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-white/5 p-4 rounded-2xl border border-white/5">
+<p class="text-[9px] font-bold text-white/30 uppercase mb-1">Localização</p>
+<p class="text-sm font-semibold text-white truncate" id="modal-location">---</p>
+</div>
+<div class="bg-white/5 p-4 rounded-2xl border border-white/5">
+<p class="text-[9px] font-bold text-white/30 uppercase mb-1">Área</p>
+<p class="text-sm font-semibold text-white"><span id="modal-area">0</span> m²</p>
+</div>
+</div>
+<div class="bg-gold p-6 rounded-2xl text-obsidian">
+<div class="flex justify-between items-center mb-4 border-b border-black/10 pb-4">
+<span class="text-[10px] font-black uppercase tracking-widest">Total com IVA</span>
+<span class="text-2xl font-manrope font-black" id="modal-total">0 Kz</span>
+</div>
+<div class="flex justify-between items-center text-sm font-black">
+<span>EM DÍVIDA</span>
+<span class="text-red-900" id="modal-debt">0 Kz</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<button class="w-full bg-white text-obsidian font-black py-4 rounded-xl flex items-center justify-center gap-2 text-[10px] uppercase tracking-widest" onclick="generateInvoice()">
+<span class="material-symbols-outlined text-lg">picture_as_pdf</span> Fatura
+                    </button>
+<button class="w-full whatsapp-gradient text-white font-black py-4 rounded-xl flex items-center justify-center gap-2 text-[10px] uppercase tracking-widest" onclick="sendWhatsApp()">
+<svg class="w-4 h-4 fill-current" viewbox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"></path></svg> Enviar
+                    </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- INVOICE PREVIEW MODAL -->
+<div class="fixed inset-0 z-[200] bg-black hidden overflow-y-auto p-4 flex items-center justify-center" id="invoice-modal">
+<div class="max-w-2xl w-full bg-white rounded-2xl shadow-2xl relative overflow-hidden">
+<div class="p-10 text-black font-inter" id="invoice-print-area">
+<!-- Dynamic PDF Content -->
+</div>
+<div class="p-6 bg-gray-50 border-t flex gap-4 no-print">
+<button class="flex-1 bg-black text-white font-bold py-4 rounded-xl text-sm" onclick="window.print()">IMPRIMIR / PDF</button>
+<button class="px-6 bg-gray-200 text-black font-bold py-4 rounded-xl text-sm" onclick="closeModal('invoice-modal')">FECHAR</button>
+</div>
+</div>
+</div>
+<!-- INFO MODALS -->
+<div class="fixed inset-0 z-[160] bg-black/95 backdrop-blur-md hidden flex items-center justify-center p-6" id="terms-modal">
+<div class="bg-obsidian-surface p-8 rounded-3xl border border-white/10 max-w-sm text-center">
+<h3 class="text-gold font-black uppercase tracking-widest mb-4">Termos e Condições</h3>
+<p class="text-xs text-white/60 leading-relaxed mb-6 text-left">As estimativas geradas pelo Drywall Pro têm validade de 5 dias úteis. A execução da obra depende da confirmação do adiantamento de 50% conforme estipulado em contrato verbal ou físico.</p>
+<button class="w-full bg-gold text-obsidian py-3 rounded-xl font-bold" onclick="closeModal('terms-modal')">ENTENDI</button>
+</div>
+</div>
+<div class="fixed inset-0 z-[160] bg-black/95 backdrop-blur-md hidden flex items-center justify-center p-6" id="privacy-modal">
+<div class="bg-obsidian-surface p-8 rounded-3xl border border-white/10 max-w-sm text-center">
+<h3 class="text-gold font-black uppercase tracking-widest mb-4">Privacidade</h3>
+<p class="text-xs text-white/60 leading-relaxed mb-6">Todos os dados das obras e clientes são armazenados localmente no seu dispositivo. Nenhuma informação é enviada para servidores externos pela C&amp;N Acabamentos.</p>
+<button class="w-full bg-gold text-obsidian py-3 rounded-xl font-bold" onclick="closeModal('privacy-modal')">ENTENDI</button>
+</div>
+</div>
 <!-- BOTTOM NAVBAR -->
 <nav class="fixed bottom-0 w-full bg-obsidian-surface/90 backdrop-blur-xl border-t border-obsidian-border px-4 h-20 flex items-center justify-around z-50">
-<button class="flex flex-col items-center gap-1 active-tab nav-transition" id="nav-dashboard" onclick="switchView('dashboard')">
+<button class="flex flex-col items-center gap-1 active-tab transition-all" id="nav-dashboard" onclick="switchView('dashboard')">
 <span class="material-symbols-outlined text-2xl">dashboard</span>
 <span class="text-[9px] font-bold uppercase tracking-tighter">Início</span>
 </button>
-<button class="flex flex-col items-center gap-1 text-white/40 nav-transition" id="nav-new-estimate" onclick="switchView('new-estimate')">
+<button class="flex flex-col items-center gap-1 text-white/40 transition-all" id="nav-new-estimate" onclick="switchView('new-estimate')">
 <span class="material-symbols-outlined text-2xl">calculate</span>
 <span class="text-[9px] font-bold uppercase tracking-tighter">Orçar</span>
 </button>
-<button class="flex flex-col items-center gap-1 text-white/40 nav-transition" id="nav-team" onclick="switchView('team')">
+<button class="flex flex-col items-center gap-1 text-white/40 transition-all" id="nav-team" onclick="switchView('team')">
 <span class="material-symbols-outlined text-2xl">groups</span>
 <span class="text-[9px] font-bold uppercase tracking-tighter">Equipa</span>
 </button>
-<button class="flex flex-col items-center gap-1 text-white/40 nav-transition" id="nav-receipts" onclick="switchView('receipts')">
+<button class="flex flex-col items-center gap-1 text-white/40 transition-all" id="nav-receipts" onclick="switchView('receipts')">
 <span class="material-symbols-outlined text-2xl">receipt_long</span>
 <span class="text-[9px] font-bold uppercase tracking-tighter">Faturas</span>
 </button>
 </nav>
 <script>
-        const STORAGE_KEY = 'drywall_pro_data_v2';
-        const TEAM_STORAGE_KEY = 'drywall_team_v2';
+    const STORAGE_KEY = 'drywall_pro_data_v1';
+    const TEAM_KEY = 'drywall_team_v1';
+    let appData = { works: [] };
+    let teamData = [];
+    let selectedWorkId = null;
+
+    const ROLE_MAP = { 'Diretor Geral': 1, 'Mestre': 2, 'Técnico': 3, 'Ajudante': 4 };
+
+    function init() {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        if (stored) appData = JSON.parse(stored);
         
-        let appData = { works: [] };
-        let teamData = [];
+        const storedTeam = localStorage.getItem(TEAM_KEY);
+        if (storedTeam) teamData = JSON.parse(storedTeam);
 
-        function initApp() {
-            const stored = localStorage.getItem(STORAGE_KEY);
-            if (stored) {
-                try { appData = JSON.parse(stored); } catch (e) { console.error(e); }
-            }
-            
-            const storedTeam = localStorage.getItem(TEAM_STORAGE_KEY);
-            if (storedTeam) {
-                try { teamData = JSON.parse(storedTeam); } catch (e) { console.error(e); }
-            }
+        updateDashboard();
+        renderTeam();
+        checkDebts();
+    }
 
-            updateDashboard();
-            renderTeam();
-            updateActiveNavStates('dashboard');
+    function switchView(viewId) {
+        document.querySelectorAll('.view-section').forEach(s => s.classList.add('hidden'));
+        document.getElementById(viewId).classList.remove('hidden');
+        
+        document.querySelectorAll('nav:not(#drawer-content nav) button').forEach(b => {
+            b.classList.remove('active-tab');
+            b.classList.add('text-white/40');
+        });
+        const activeNav = document.getElementById('nav-' + viewId);
+        if (activeNav) {
+            activeNav.classList.remove('text-white/40');
+            activeNav.classList.add('active-tab');
         }
 
-        function clearAllData() {
-            if (confirm('Tem a certeza que deseja limpar todos os dados? Esta ação não pode ser desfeita.')) {
-                localStorage.clear();
-                window.location.reload();
-            }
+        if (viewId === 'dashboard') updateDashboard();
+        if (viewId === 'receipts') renderReceipts();
+        if (viewId === 'shopping-list') renderShoppingList();
+        window.scrollTo(0,0);
+    }
+
+    function toggleDrawer() {
+        const d = document.getElementById('drawer-content');
+        const o = document.getElementById('drawer-overlay');
+        const isOpen = d.classList.contains('translate-x-0');
+        if (isOpen) {
+            d.classList.replace('translate-x-0', '-translate-x-full');
+            o.classList.replace('opacity-100', 'opacity-0');
+            o.classList.add('pointer-events-none');
+        } else {
+            d.classList.replace('-translate-x-full', 'translate-x-0');
+            o.classList.replace('opacity-0', 'opacity-100');
+            o.classList.remove('pointer-events-none');
         }
+    }
 
-        function switchView(viewId) {
-            document.querySelectorAll('.view-section').forEach(section => {
-                section.classList.add('hidden');
-            });
-            const target = document.getElementById(viewId);
-            if (target) target.classList.remove('hidden');
+    function calculateTotal() {
+        const base = parseInt(document.getElementById('material').value) || 0;
+        const area = parseFloat(document.getElementById('area').value) || 0;
+        let subtotal = area * base;
 
-            updateActiveNavStates(viewId);
-            window.scrollTo(0, 0);
+        if (document.getElementById('service-painting').checked) subtotal += area * 2500;
+        if (document.getElementById('service-sancas').checked) subtotal += area * 2500;
+        if (document.getElementById('service-electricity').checked) subtotal += area * 1200;
 
-            if (viewId === 'dashboard') updateDashboard();
-            if (viewId === 'receipts') renderReceipts();
-            if (viewId === 'shopping-list') updateShoppingListView();
-            if (viewId === 'team') renderTeam();
-        }
+        const total = subtotal * 1.14;
+        document.getElementById('totalDisplay').innerText = Math.round(total).toLocaleString('pt-PT');
+        return total;
+    }
 
-        function updateActiveNavStates(viewId) {
-            const bottomNavMap = {
-                'dashboard': 'nav-dashboard',
-                'new-estimate': 'nav-new-estimate',
-                'team': 'nav-team',
-                'receipts': 'nav-receipts',
-                'shopping-list': 'nav-dashboard'
-            };
+    function saveWork() {
+        const client = document.getElementById('clientName').value;
+        const location = document.getElementById('location').value;
+        const area = parseFloat(document.getElementById('area').value) || 0;
+        const total = calculateTotal();
+        const paid = parseFloat(document.getElementById('payment').value) || 0;
 
-            document.querySelectorAll('nav:not(#drawer-content nav) button').forEach(btn => {
-                btn.classList.remove('active-tab');
-                btn.classList.add('text-white/40');
-            });
-            
-            const activeId = bottomNavMap[viewId];
-            const activeBottomNav = document.getElementById(activeId);
-            if (activeBottomNav) {
-                activeBottomNav.classList.remove('text-white/40');
-                activeBottomNav.classList.add('active-tab');
-            }
+        if (!client || area <= 0) return alert('Campos obrigatórios: Nome e Área');
 
-            document.querySelectorAll('#drawer-content nav button').forEach(btn => {
-                btn.classList.remove('drawer-active');
-                const icon = btn.querySelector('.material-symbols-outlined');
-                if (icon) icon.classList.replace('text-gold', 'text-white/60');
-            });
-            
-            const drawerIdMap = {
-                'dashboard': 'drawer-nav-dashboard',
-                'new-estimate': 'drawer-nav-new-estimate',
-                'shopping-list': 'drawer-nav-shopping-list',
-                'team': 'drawer-nav-team',
-                'receipts': 'drawer-nav-receipts'
-            };
+        const work = {
+            id: Date.now(), client, location, area, total, paid,
+            date: new Date().toLocaleDateString('pt-PT'),
+            materialType: document.getElementById('material').options[document.getElementById('material').selectedIndex].text
+        };
 
-            const activeDrawerNav = document.getElementById(drawerIdMap[viewId]);
-            if (activeDrawerNav) {
-                activeDrawerNav.classList.add('drawer-active');
-                const icon = activeDrawerNav.querySelector('.material-symbols-outlined');
-                if (icon) icon.classList.replace('text-white/60', 'text-gold');
-            }
-        }
+        appData.works.unshift(work);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(appData));
+        resetForm();
+        switchView('dashboard');
+    }
 
-        function toggleDrawer() {
-            const drawer = document.getElementById('drawer-content');
-            const overlay = document.getElementById('drawer-overlay');
-            const isOpen = drawer.style.transform === 'translateX(0px)';
-            
-            if (isOpen) {
-                drawer.style.transform = 'translateX(-100%)';
-                overlay.style.opacity = '0';
-                overlay.classList.add('pointer-events-none');
-            } else {
-                drawer.style.transform = 'translateX(0px)';
-                overlay.style.opacity = '1';
-                overlay.classList.remove('pointer-events-none');
-            }
-        }
+    function resetForm() {
+        document.getElementById('clientName').value = '';
+        document.getElementById('location').value = '';
+        document.getElementById('area').value = '';
+        document.getElementById('payment').value = '';
+        document.getElementById('service-painting').checked = false;
+        document.getElementById('service-sancas').checked = false;
+        document.getElementById('service-electricity').checked = false;
+        calculateTotal();
+    }
 
-        function formatLocation(input) {
-            input.value = input.value.split(' ')
-                .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-                .join(' ');
-        }
-
-        function calculateTotal() {
-            const materialSelect = document.getElementById('material');
-            const basePrice = parseInt(materialSelect.value) || 0;
-            const areaInput = document.getElementById('area');
-            const area = parseFloat(areaInput.value) || 0;
-            
-            const services = document.querySelectorAll('input[name="service"]:checked').length;
-            const extraRate = 2500;
-            
-            // LOGIC: Total = (Area * MaterialPrice) + (Area * 2500 * NumServices)
-            const grandTotal = (area * basePrice) + (area * extraRate * services);
-            
-            const paymentInput = document.getElementById('payment');
-            const payment = parseFloat(paymentInput.value) || 0;
-            const debt = grandTotal - payment;
-
-            document.getElementById('totalDisplay').innerText = grandTotal.toLocaleString('pt-PT');
-            
-            const debtDisplay = document.getElementById('debtDisplay');
-            debtDisplay.innerText = Math.max(0, debt).toLocaleString('pt-PT') + ' Kz';
-            
-            if (grandTotal === 0 && payment === 0) {
-                debtDisplay.className = "text-sm font-black text-white/20 mt-2";
-            } else if (debt > 0) {
-                debtDisplay.className = "text-sm font-black text-red-400 mt-2";
-            } else {
-                debtDisplay.className = "text-sm font-black text-green-400 mt-2";
-            }
-
-            return { grandTotal, area, payment, debt, material: materialSelect.options[materialSelect.selectedIndex]?.text };
-        }
-
-        function updateShoppingListView() {
-            const lastWork = appData.works[0];
-            const area = lastWork ? lastWork.area : 0;
-            const materialStr = lastWork ? lastWork.material : "";
-            const isPVC = materialStr.includes('PVC');
-            
-            const container = document.getElementById('material-list-container');
-            const actions = document.getElementById('shopping-actions');
-
-            if (area <= 0) {
-                container.innerHTML = `
-                    <div class="bg-obsidian-card/40 border border-dashed border-white/10 rounded-2xl p-12 text-center">
-                        <span class="material-symbols-outlined text-4xl text-white/10 mb-2">production_quantity_limits</span>
-                        <p class="text-[10px] text-white/30 uppercase font-bold">Nenhum material pendente. Crie um orçamento para gerar a lista.</p>
-                    </div>
-                `;
-                actions.classList.add('hidden');
-                return;
-            }
-
-            let list = [];
-            const safetyMargin = 1.1; // 10% safety margin
-
-            if (isPVC) {
-                list = [
-                    { name: "Lâminas de PVC (6m)", qty: Math.ceil((area / 2.8) * safetyMargin), unit: "Un" },
-                    { name: "Estrutura / Ripas", qty: Math.ceil(area * 2 * safetyMargin), unit: "m" },
-                    { name: "Cantoneiras de Remate", qty: Math.ceil(Math.sqrt(area) * 4 * safetyMargin), unit: "m" }
-                ];
-            } else {
-                list = [
-                    { name: "Placas de Pladur", qty: Math.ceil((area / 2.88) * safetyMargin), unit: "Un" },
-                    { name: "Perfis Metálicos (C)", qty: Math.ceil(area * 1.5 * safetyMargin), unit: "m" },
-                    { name: "Parafusos TN25", qty: Math.ceil(area * 25 * safetyMargin), unit: "Un" },
-                    { name: "Massa de Juntas", qty: Math.ceil(area * 0.5 * safetyMargin), unit: "Kg" }
-                ];
-            }
-
-            container.innerHTML = `
-                <div class="mb-4 px-1">
-                    <p class="text-[9px] text-white/40 uppercase font-black tracking-widest">Baseado em: ${lastWork.client} (${area} m²)</p>
+    function updateDashboard() {
+        const totalRev = appData.works.reduce((a, b) => a + b.total, 0);
+        const totalArea = appData.works.reduce((a, b) => a + b.area, 0);
+        document.getElementById('dashRevenue').innerText = Math.round(totalRev).toLocaleString('pt-PT');
+        document.getElementById('dashArea').innerText = totalArea.toLocaleString('pt-PT');
+        document.getElementById('dashAreaStatus').innerText = appData.works.length > 0 ? `${appData.works.length} Obras Totais` : "Nenhuma medição";
+        
+        const list = document.getElementById('recent-works-list');
+        list.innerHTML = appData.works.slice(0, 5).map(w => `
+            <div class="bg-obsidian-card p-4 rounded-xl border border-obsidian-border flex justify-between items-center group active:scale-[0.98] transition-all" onclick="openWorkDetails(${w.id})">
+                <div>
+                    <h4 class="text-sm font-bold text-white">${w.client}</h4>
+                    <p class="text-[10px] text-white/40 uppercase tracking-tighter">${w.location} • ${w.area}m²</p>
                 </div>
-            ` + list.map(item => `
-                <div class="bg-obsidian-card p-4 rounded-xl border border-obsidian-border flex justify-between items-center group">
-                    <div class="flex items-center gap-4">
-                        <input type="checkbox" class="w-5 h-5 rounded border-white/10 bg-white/5 checked:bg-gold transition-colors focus:ring-0">
-                        <div>
-                            <h4 class="text-sm font-bold text-white font-manrope">${item.name}</h4>
-                            <p class="text-[10px] text-white/40 uppercase font-bold tracking-widest">Controlo de Logística</p>
-                        </div>
-                    </div>
-                    <div class="text-right">
-                        <p class="text-lg font-manrope font-black text-gold">${item.qty} <span class="text-[10px] text-white/40 font-bold uppercase">${item.unit}</span></p>
-                    </div>
+                <div class="text-right">
+                    <p class="text-sm font-black text-gold">${Math.round(w.total).toLocaleString('pt-PT')} Kz</p>
+                    <p class="text-[9px] text-white/20">${w.date}</p>
                 </div>
-            `).join('');
+            </div>
+        `).join('') || '<div class="text-center py-10 opacity-20 text-xs">SEM OBRAS RECENTES</div>';
+    }
 
-            actions.classList.remove('hidden');
-        }
+    function openWorkDetails(id) {
+        selectedWorkId = id;
+        const work = appData.works.find(w => w.id === id);
+        document.getElementById('modal-client-name').innerText = work.client;
+        document.getElementById('modal-location').innerText = work.location;
+        document.getElementById('modal-area').innerText = work.area;
+        document.getElementById('modal-total').innerText = Math.round(work.total).toLocaleString('pt-PT') + ' Kz';
+        document.getElementById('modal-debt').innerText = Math.round(work.total - work.paid).toLocaleString('pt-PT') + ' Kz';
+        openModal('work-details-modal');
+    }
 
-        function copyShoppingList() {
-            const lastWork = appData.works[0];
-            if (!lastWork) return;
-            const items = document.querySelectorAll('#material-list-container .group');
-            let text = `LISTA DE MATERIAIS - OBRA: ${lastWork.client}\nÁrea: ${lastWork.area} m²\n\n`;
-            items.forEach(el => {
-                const name = el.querySelector('h4').innerText;
-                const qty = el.querySelector('.text-lg').innerText;
-                text += `- ${name}: ${qty}\n`;
-            });
-            navigator.clipboard.writeText(text).then(() => alert('Lista copiada para a área de transferência!'));
-        }
-
-        function sendWhatsApp() {
-            const client = document.getElementById('clientName').value || 'Cliente';
-            const phone = document.getElementById('clientPhone').value || '';
-            const location = document.getElementById('location').value || 'Não informada';
-            const area = document.getElementById('area').value || '0';
-            const { grandTotal, debt, material } = calculateTotal();
-
-            const text = `Olá, aqui é da C&N Acabamentos. Orçamento para a sua obra em ${location}: Material base: ${material} | Área: ${area}m2. Total do Investimento: ${grandTotal.toLocaleString('pt-PT')} Kz. Saldo em dívida: ${debt.toLocaleString('pt-PT')} Kz. Orçamento válido por 5 dias.`;
-            
-            const waBase = phone ? `https://wa.me/${phone.replace(/\D/g, '')}` : `https://wa.me/`;
-            window.open(`${waBase}?text=${encodeURIComponent(text)}`, '_blank');
-        }
-
-        function saveWork() {
-            const clientNameInput = document.getElementById('clientName').value;
-            const clientPhone = document.getElementById('clientPhone').value;
-            const locationInput = document.getElementById('location').value;
-            const { grandTotal, area, payment, material } = calculateTotal();
-
-            if (!clientNameInput || !locationInput || area <= 0) {
-                alert('Por favor, preencha o nome do cliente, localização e área.');
-                return;
-            }
-
-            const newWork = {
-                id: Date.now(),
-                client: clientNameInput,
-                location: locationInput,
-                phone: clientPhone,
-                area: area,
-                material: material,
-                total: grandTotal,
-                paid: payment,
-                date: new Date().toLocaleDateString('pt-PT')
-            };
-
-            appData.works.unshift(newWork);
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(appData));
-            
-            alert('Obra guardada com sucesso!');
-            resetForm();
-            switchView('dashboard');
-        }
-
-        function updateDashboard() {
-            const totalRevenue = appData.works.reduce((acc, work) => acc + (work.total || 0), 0);
-            const totalArea = appData.works.reduce((acc, work) => acc + (work.area || 0), 0);
-
-            document.getElementById('dashRevenue').innerText = totalRevenue.toLocaleString('pt-PT');
-            document.getElementById('dashArea').innerText = totalArea.toLocaleString('pt-PT');
-            
-            const areaStatus = document.getElementById('dashAreaStatus');
-            if (totalArea > 0) {
-                areaStatus.innerText = "Medições consolidadas";
-                areaStatus.classList.remove('italic', 'text-white/20');
-                areaStatus.classList.add('text-white/40');
-            } else {
-                areaStatus.innerText = "Nenhuma medição registada";
-                areaStatus.classList.add('italic', 'text-white/20');
-            }
-
-            renderRecentWorks();
-        }
-
-        function renderRecentWorks() {
-            const container = document.getElementById('recent-works-list');
-            if (!container) return;
-
-            if (appData.works.length === 0) {
-                container.innerHTML = `
-                    <div class="bg-obsidian-card/40 border border-dashed border-white/10 rounded-2xl p-8 text-center">
-                        <span class="material-symbols-outlined text-3xl text-white/10 mb-2">inventory</span>
-                        <p class="text-[10px] text-white/30 uppercase font-bold">Sem obras registadas</p>
-                    </div>
-                `;
-                return;
-            }
-
-            container.innerHTML = appData.works.slice(0, 5).map(work => `
-                <div class="bg-obsidian-card p-4 rounded-xl border border-obsidian-border flex justify-between items-center group">
-                    <div class="overflow-hidden">
-                        <h4 class="text-sm font-bold text-white truncate">${work.client || 'Sem Nome'}</h4>
-                        <p class="text-[10px] text-white/40 uppercase font-medium tracking-tighter truncate">${work.location || '---'} • ${work.area || 0} m²</p>
-                    </div>
-                    <div class="text-right flex-shrink-0">
-                        <p class="text-sm font-black text-gold">${(work.total || 0).toLocaleString('pt-PT')} Kz</p>
-                        <p class="text-[9px] text-white/20">${work.date || '---'}</p>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function renderReceipts() {
-            const container = document.getElementById('receipts-list');
-            const totalDisplay = document.getElementById('receiptTotalDisplay');
-            const debtDisplay = document.getElementById('totalDebtDisplay');
-            
-            const totalPaid = appData.works.reduce((acc, work) => acc + (work.paid || 0), 0);
-            const totalDebt = appData.works.reduce((acc, work) => acc + ((work.total || 0) - (work.paid || 0)), 0);
-            
-            totalDisplay.innerText = totalPaid.toLocaleString('pt-PT');
-            debtDisplay.innerText = Math.max(0, totalDebt).toLocaleString('pt-PT');
-
-            if (appData.works.length === 0) {
-                container.innerHTML = `
-                    <div class="bg-obsidian-card/40 border border-dashed border-white/10 rounded-2xl p-8 text-center">
-                        <p class="text-[10px] text-white/30 uppercase font-bold">Histórico vazio</p>
-                    </div>
-                `;
-                return;
-            }
-
-            container.innerHTML = appData.works.filter(w => (w.paid || 0) > 0).map(work => `
-                <div class="bg-obsidian-card p-4 rounded-xl border-l-2 border-green-500/50 flex justify-between items-center">
+    function renderReceipts() {
+        const debt = appData.works.reduce((a, b) => a + (b.total - b.paid), 0);
+        document.getElementById('totalDebtDisplay').innerText = Math.round(debt).toLocaleString('pt-PT');
+        
+        const list = document.getElementById('receipts-list');
+        list.innerHTML = appData.works.map(w => `
+            <div class="bg-obsidian-surface p-5 rounded-2xl border border-white/5 flex flex-col gap-4">
+                <div class="flex justify-between items-start">
                     <div>
-                        <h4 class="text-xs font-bold text-white uppercase">${work.client || 'Cliente'}</h4>
-                        <p class="text-[9px] text-white/40">Entrada / Adiantamento</p>
+                        <h4 class="font-bold text-white">${w.client}</h4>
+                        <p class="text-[10px] text-white/40 uppercase">${w.date}</p>
                     </div>
                     <div class="text-right">
-                        <p class="text-sm font-black text-green-400">+ ${(work.paid || 0).toLocaleString('pt-PT')} Kz</p>
-                        <p class="text-[9px] text-white/20">${work.date}</p>
+                        <p class="text-xs font-bold ${w.total - w.paid > 10 ? 'text-red-400' : 'text-green-400'}">
+                            ${w.total - w.paid > 10 ? 'EM DÍVIDA' : 'LIQUIDADO'}
+                        </p>
                     </div>
                 </div>
-            `).join('');
+                <div class="flex gap-2">
+                    <button class="flex-1 bg-white/5 py-3 rounded-xl text-[9px] font-black uppercase tracking-widest border border-white/10" onclick="openWorkDetails(${w.id})">VER RECIBO</button>
+                    <button class="flex-1 bg-gold/10 text-gold py-3 rounded-xl text-[9px] font-black uppercase tracking-widest border border-gold/10" onclick="generateInvoice(${w.id})">FATURA PDF</button>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function renderShoppingList() {
+        const lastWork = appData.works[0];
+        const container = document.getElementById('material-list-container');
+        if (!lastWork) {
+            container.innerHTML = '<div class="text-center py-10 opacity-20 text-xs">REGISTE UMA OBRA PARA VER MATERIAIS</div>';
+            return;
         }
 
-        function addMember() {
-            const name = document.getElementById('memberName').value;
-            const role = document.getElementById('memberRole').value;
-            
-            if (!name) return alert("Indique o nome do colaborador.");
-            
-            const newMember = {
-                id: Date.now(),
-                name: name,
-                role: role
-            };
-            
-            teamData.push(newMember);
-            localStorage.setItem(TEAM_STORAGE_KEY, JSON.stringify(teamData));
-            
-            document.getElementById('memberName').value = '';
-            renderTeam();
+        const area = lastWork.area * 1.1; // 10% safety margin
+        const type = lastWork.materialType;
+        
+        let materials = [];
+        if (type.includes('Pladur')) {
+            materials = [
+                { item: 'Placas de Gesso (2x1.2m)', qty: Math.ceil(area / 2.4) },
+                { item: 'Canais (3m)', qty: Math.ceil(area * 0.8) },
+                { item: 'Montantes (3m)', qty: Math.ceil(area * 1.5) },
+                { item: 'Massa de Juntas (Kg)', qty: Math.ceil(area * 0.5) }
+            ];
+        } else {
+            materials = [
+                { item: 'Painéis de PVC', qty: Math.ceil(area / 0.8) },
+                { item: 'Perfis U (Canto)', qty: Math.ceil(Math.sqrt(area) * 4 / 3) },
+                { item: 'Estrutura Madeira/Metal', qty: 'Ajustar Local' }
+            ];
         }
 
-        function removeMember(id) {
-            teamData = teamData.filter(m => m.id !== id);
-            localStorage.setItem(TEAM_STORAGE_KEY, JSON.stringify(teamData));
-            renderTeam();
-        }
+        container.innerHTML = `
+            <div class="p-4 bg-gold/10 border border-gold/20 rounded-2xl mb-4">
+                <p class="text-[10px] font-black text-gold uppercase mb-1">Base de Cálculo</p>
+                <p class="text-sm font-bold text-white">${lastWork.client} (${lastWork.area} m² + 10%)</p>
+            </div>
+            ${materials.map(m => `
+                <div class="flex items-center justify-between p-4 bg-obsidian-card rounded-xl border border-obsidian-border">
+                    <span class="text-sm text-white/80 font-semibold">${m.item}</span>
+                    <span class="text-lg font-black text-gold">${m.qty}</span>
+                </div>
+            `).join('')}
+        `;
+    }
 
-        function renderTeam() {
-            const container = document.getElementById('team-list');
-            const counter = document.getElementById('teamCountTotal');
-            
-            counter.innerText = teamData.length;
+    function addMember() {
+        const name = document.getElementById('memberName').value;
+        const role = document.getElementById('memberRole').value;
+        if (!name) return;
+        teamData.push({ id: Date.now(), name, role });
+        localStorage.setItem(TEAM_KEY, JSON.stringify(teamData));
+        document.getElementById('memberName').value = '';
+        renderTeam();
+    }
 
-            if (teamData.length === 0) {
-                container.innerHTML = `
-                    <div class="bg-obsidian-card/40 border border-dashed border-white/10 rounded-2xl p-10 text-center">
-                        <p class="text-[10px] text-white/30 uppercase font-bold">Nenhum colaborador adicionado</p>
+    function removeMember(id) {
+        teamData = teamData.filter(m => m.id !== id);
+        localStorage.setItem(TEAM_KEY, JSON.stringify(teamData));
+        renderTeam();
+    }
+
+    function renderTeam() {
+        const container = document.getElementById('team-list');
+        const sorted = [...teamData].sort((a,b) => ROLE_MAP[a.role] - ROLE_MAP[b.role]);
+        container.innerHTML = sorted.map(m => `
+            <div class="bg-obsidian-card p-4 rounded-xl border border-obsidian-border flex justify-between items-center">
+                <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-lg">👷🏽‍♂️</div>
+                    <div>
+                        <h4 class="text-sm font-bold text-white">${m.name}</h4>
+                        <p class="text-[10px] uppercase tracking-widest ${m.role === 'Diretor Geral' ? 'text-gold' : 'text-white/30'}">${m.role}</p>
                     </div>
-                `;
-                return;
-            }
+                </div>
+                <button onclick="removeMember(${m.id})" class="text-white/20 hover:text-red-500">
+                    <span class="material-symbols-outlined">delete</span>
+                </button>
+            </div>
+        `).join('') || '<div class="text-center py-10 opacity-20 text-xs">ADICIONE ELEMENTOS À EQUIPA</div>';
+    }
 
-            container.innerHTML = teamData.map(member => {
-                let emoji = '🔨';
-                if (member.role === 'Mestre') emoji = '👷🏾';
-                if (member.role === 'Pintor') emoji = '🎨';
-
-                return `
-                    <div class="bg-obsidian-card p-5 rounded-2xl border border-obsidian-border flex justify-between items-center shadow-sm">
-                        <div class="flex items-center gap-4 min-w-0">
-                            <div class="w-11 h-11 rounded-full bg-white/5 flex items-center justify-center text-xl flex-shrink-0">
-                                ${emoji}
-                            </div>
-                            <div class="min-w-0">
-                                <h4 class="text-sm font-bold text-white truncate leading-tight">${member.name}</h4>
-                                <p class="text-[10px] text-gold uppercase font-black tracking-widest mt-0.5">${member.role}</p>
-                            </div>
-                        </div>
-                        <button onclick="removeMember(${member.id})" class="text-red-400/40 hover:text-red-400 p-3 -mr-2 transition-colors active:bg-red-500/10 rounded-full">
-                            <span class="material-symbols-outlined text-2xl">person_remove</span>
-                        </button>
-                    </div>
-                `;
-            }).join('');
+    function checkDebts() {
+        const hasDebts = appData.works.some(w => (w.total - w.paid) > 10);
+        const dot = document.getElementById('pending-alert-dot');
+        const icon = document.getElementById('notification-icon');
+        if (hasDebts) {
+            dot.classList.remove('hidden');
+            icon.classList.add('text-coral', 'pulse-alert');
+            renderNotifications();
+        } else {
+            dot.classList.add('hidden');
+            icon.classList.remove('text-coral', 'pulse-alert');
         }
+    }
 
-        function resetForm() {
-            document.getElementById('clientName').value = '';
-            document.getElementById('clientPhone').value = '';
-            document.getElementById('location').value = '';
-            const matSelect = document.getElementById('material');
-            if(matSelect) matSelect.selectedIndex = 0;
-            document.getElementById('area').value = '';
-            document.getElementById('payment').value = '';
-            document.querySelectorAll('input[name="service"]').forEach(cb => cb.checked = false);
-            calculateTotal();
+    function renderNotifications() {
+        const list = document.getElementById('notifications-list');
+        const debts = appData.works.filter(w => (w.total - w.paid) > 10);
+        if (debts.length === 0) {
+            list.innerHTML = '<p class="text-center text-xs opacity-40 py-10">SEM NOTIFICAÇÕES</p>';
+            return;
         }
+        list.innerHTML = debts.map(w => `
+            <div class="bg-white/5 p-4 rounded-2xl border border-white/5 flex gap-4 items-center">
+                <div class="w-2 h-2 rounded-full bg-coral"></div>
+                <div>
+                    <p class="text-sm font-semibold text-white">Pagamento Pendente: ${w.client}</p>
+                    <p class="text-[10px] text-white/40 uppercase">Dívida: ${Math.round(w.total - w.paid).toLocaleString('pt-PT')} Kz</p>
+                </div>
+            </div>
+        `).join('');
+    }
 
-        initApp();
-    </script>
+    function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
+    function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+
+    function sendWhatsApp() {
+        const work = appData.works.find(w => w.id === selectedWorkId);
+        const msg = `Olá ${work.client}, aqui é da C&N Acabamentos. Orçamento para obra em ${work.location}: Total de ${Math.round(work.total).toLocaleString('pt-PT')} Kz. (Válido por 5 dias). Drywall Pro APP.`;
+        window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`);
+    }
+
+    function generateInvoice(id) {
+        const work = appData.works.find(w => w.id === (id || selectedWorkId));
+        const html = `
+            <div style="border-bottom: 2px solid gold; padding-bottom: 20px; margin-bottom: 20px;">
+                <h1 style="font-size: 24px; font-weight: 800;">FATURA PROFORMA</h1>
+                <p style="font-size: 10px; color: gray;">#INV-${work.id}</p>
+            </div>
+            <div style="display: grid; grid-template-cols: 1fr 1fr; margin-bottom: 40px;">
+                <div>
+                    <h4 style="font-size: 10px; text-transform: uppercase; color: gray;">EMITIDO POR</h4>
+                    <p style="font-weight: 800;">C&N ACABAMENTO LDA & J.QUISSAMA</p>
+                    <p style="font-size: 12px;">NIF: 5171161615</p>
+                </div>
+                <div style="text-align: right;">
+                    <h4 style="font-size: 10px; text-transform: uppercase; color: gray;">PARA</h4>
+                    <p style="font-weight: 800;">${work.client}</p>
+                    <p style="font-size: 12px;">${work.location}</p>
+                </div>
+            </div>
+            <table style="width: 100%; border-collapse: collapse;">
+                <tr style="background: #f4f4f4; text-align: left;">
+                    <th style="padding: 10px; font-size: 12px;">DESCRIÇÃO</th>
+                    <th style="padding: 10px; font-size: 12px;">ÁREA</th>
+                    <th style="padding: 10px; font-size: 12px; text-align: right;">TOTAL</th>
+                </tr>
+                <tr>
+                    <td style="padding: 10px; border-bottom: 1px solid #eee;">${work.materialType}</td>
+                    <td style="padding: 10px; border-bottom: 1px solid #eee;">${work.area} m²</td>
+                    <td style="padding: 10px; border-bottom: 1px solid #eee; text-align: right;">${Math.round(work.total).toLocaleString('pt-PT')} Kz</td>
+                </tr>
+            </table>
+            <div style="margin-top: 40px; text-align: right;">
+                <p style="font-size: 14px; font-weight: 800;">TOTAL FINAL: ${Math.round(work.total).toLocaleString('pt-PT')} Kz</p>
+                <p style="font-size: 12px; color: gray;">Pago: ${Math.round(work.paid).toLocaleString('pt-PT')} Kz</p>
+                <p style="font-size: 16px; font-weight: 900; color: #b91c1c;">A PAGAR: ${Math.round(work.total - work.paid).toLocaleString('pt-PT')} Kz</p>
+            </div>
+            <div style="margin-top: 60px; font-size: 10px; color: gray; text-align: center;">
+                <p>Obrigado pela preferência. Validade: 5 dias.</p>
+            </div>
+        `;
+        document.getElementById('invoice-print-area').innerHTML = html;
+        openModal('invoice-modal');
+    }
+
+    function clearAllData() {
+        if (confirm('Deseja limpar todos os dados da aplicação?')) {
+            localStorage.clear();
+            location.reload();
+        }
+    }
+
+    window.onload = init;
+</script>
 </body></html>
