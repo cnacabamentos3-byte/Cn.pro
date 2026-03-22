@@ -1,6 +1,7 @@
 <html class="dark" lang="pt-PT"><head></head><body class="pb-40 overflow-x-hidden selection:bg-gold selection:text-obsidian">```html
 
-<meta charset="utf-8"/>
+
+    <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
 <title>Drywall Pro - C&amp;N Acabamentos</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -82,23 +83,23 @@
 </div>
 </div>
 <nav class="flex-1 p-4 space-y-1 mt-4">
-<button class="w-full flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors group" onclick="switchView('dashboard'); toggleDrawer()">
+<button class="w-full flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors group text-left" onclick="switchView('dashboard'); toggleDrawer()">
 <span class="material-symbols-outlined text-white/60 group-hover:text-gold transition-colors">dashboard</span>
 <span class="text-sm font-semibold">Painel Principal</span>
 </button>
-<button class="w-full flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors group" onclick="switchView('new-estimate'); toggleDrawer()">
+<button class="w-full flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors group text-left" onclick="switchView('new-estimate'); toggleDrawer()">
 <span class="material-symbols-outlined text-white/60 group-hover:text-gold transition-colors">calculate</span>
 <span class="text-sm font-semibold">Novo Orçamento</span>
 </button>
-<button class="w-full flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors group" onclick="switchView('shopping-list'); toggleDrawer()">
+<button class="w-full flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors group text-left" onclick="switchView('shopping-list'); toggleDrawer()">
 <span class="material-symbols-outlined text-white/60 group-hover:text-gold transition-colors">inventory_2</span>
 <span class="text-sm font-semibold">Lista de Materiais</span>
 </button>
-<button class="w-full flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors group" onclick="switchView('team'); toggleDrawer()">
+<button class="w-full flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors group text-left" onclick="switchView('team'); toggleDrawer()">
 <span class="material-symbols-outlined text-white/60 group-hover:text-gold transition-colors">groups</span>
 <span class="text-sm font-semibold">Gestão de Equipa</span>
 </button>
-<button class="w-full flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors group" onclick="switchView('receipts'); toggleDrawer()">
+<button class="w-full flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors group text-left" onclick="switchView('receipts'); toggleDrawer()">
 <span class="material-symbols-outlined text-white/60 group-hover:text-gold transition-colors">receipt_long</span>
 <span class="text-sm font-semibold">Relatórios Financeiros</span>
 </button>
@@ -141,7 +142,7 @@
 </button>
 </div>
 <div class="space-y-3" id="notifications-list">
-<!-- Dynamic -->
+<!-- Dynamic Content -->
 </div>
 </div>
 </div>
@@ -204,7 +205,7 @@
 <div>
 <h3 class="text-[10px] uppercase font-bold text-white/40 tracking-widest mb-4 px-1">Obras Recentes</h3>
 <div class="space-y-3" id="recent-works-list">
-<!-- Dynamic -->
+<!-- Dynamic Content -->
 </div>
 </div>
 <div class="pt-8 flex justify-center">
@@ -311,7 +312,7 @@
 <button class="w-full bg-gold/10 text-gold py-3 rounded-xl text-xs font-black uppercase tracking-widest border border-gold/20" onclick="addMember()">Adicionar</button>
 </div>
 <div class="space-y-3" id="team-list">
-<!-- Dynamic -->
+<!-- Dynamic Content -->
 </div>
 </section>
 <!-- RECEIPTS VIEW -->
@@ -328,7 +329,7 @@
 </div>
 </div>
 <div class="space-y-4" id="receipts-list">
-<!-- Dynamic -->
+<!-- Dynamic Content -->
 </div>
 </section>
 <!-- SHOPPING LIST VIEW -->
@@ -338,7 +339,7 @@
 <p class="text-[10px] text-white/40 font-bold uppercase tracking-widest mt-1">Cálculo de Materiais (Margem 10%)</p>
 </div>
 <div class="space-y-3" id="material-list-container">
-<!-- Dynamic -->
+<!-- Dynamic Content -->
 </div>
 </section>
 </main>
@@ -377,7 +378,7 @@
 </div>
 </div>
 <div class="grid grid-cols-2 gap-3">
-<button class="w-full bg-white text-obsidian font-black py-4 rounded-xl flex items-center justify-center gap-2 text-[10px] uppercase tracking-widest" onclick="generateInvoice()">
+<button class="w-full bg-white text-obsidian font-black py-4 rounded-xl flex items-center justify-center gap-2 text-[10px] uppercase tracking-widest" onclick="generateInvoiceFromModal()">
 <span class="material-symbols-outlined text-lg">picture_as_pdf</span> Fatura
                     </button>
 <button class="w-full whatsapp-gradient text-white font-black py-4 rounded-xl flex items-center justify-center gap-2 text-[10px] uppercase tracking-widest" onclick="sendWhatsApp()">
@@ -392,7 +393,7 @@
 <div class="fixed inset-0 z-[200] bg-black hidden overflow-y-auto p-4 flex items-center justify-center" id="invoice-modal">
 <div class="max-w-2xl w-full bg-white rounded-lg shadow-2xl relative overflow-hidden">
 <div class="p-8 md:p-12 text-black font-inter" id="invoice-print-area">
-<!-- Dynamic PDF Content (New Template) -->
+<!-- Dynamic Content -->
 </div>
 <div class="p-6 bg-gray-100 border-t flex gap-4 no-print">
 <button class="flex-1 bg-black text-white font-bold py-4 rounded-xl text-sm uppercase tracking-widest" onclick="window.print()">IMPRIMIR / PDF</button>
@@ -443,13 +444,12 @@
 
     const ROLE_MAP = { 'Diretor Geral': 1, 'Mestre': 2, 'Técnico': 3, 'Ajudante': 4 };
 
-    // Format numbers with thousands separator (period)
+    // Format numbers with thousands separator (period) for display
     function formatNum(value) {
         if (value === undefined || value === null) return '0';
         return Math.round(value).toLocaleString('pt-PT');
     }
 
-    // Format specifically for Kz values
     function formatKz(value) {
         return `${formatNum(value)} Kz`;
     }
@@ -468,12 +468,14 @@
 
     function switchView(viewId) {
         document.querySelectorAll('.view-section').forEach(s => s.classList.add('hidden'));
-        document.getElementById(viewId).classList.remove('hidden');
+        const targetView = document.getElementById(viewId);
+        if (targetView) targetView.classList.remove('hidden');
         
         document.querySelectorAll('nav:not(#drawer-content nav) button').forEach(b => {
             b.classList.remove('active-tab');
             b.classList.add('text-white/40');
         });
+        
         const activeNav = document.getElementById('nav-' + viewId);
         if (activeNav) {
             activeNav.classList.remove('text-white/40');
@@ -511,7 +513,8 @@
     function calculateTotal() {
         const select = document.getElementById('material');
         const base = parseInt(select.value) || 0;
-        const area = parseFloat(document.getElementById('area').value) || 0;
+        const areaInput = document.getElementById('area');
+        const area = parseFloat(areaInput.value) || 0;
         
         const isRack = select.options[select.selectedIndex].text.includes('Rack');
         
@@ -531,22 +534,30 @@
     }
 
     function saveWork() {
-        const client = document.getElementById('clientName').value;
-        const phone = document.getElementById('clientPhone').value;
-        const locationStr = document.getElementById('location').value;
+        const client = document.getElementById('clientName').value.trim();
+        const phone = document.getElementById('clientPhone').value.trim();
+        const locationStr = document.getElementById('location').value.trim();
         const area = parseFloat(document.getElementById('area').value) || 0;
-        const total = calculateTotal();
         const paid = parseFloat(document.getElementById('payment').value) || 0;
+        const select = document.getElementById('material');
+        const isRack = select.options[select.selectedIndex].text.includes('Rack');
 
-        if (!client || (area <= 0 && !document.getElementById('material').options[document.getElementById('material').selectedIndex].text.includes('Rack'))) {
-            return alert('Campos obrigatórios: Nome e Área');
-        }
+        if (!client) return alert('Por favor, indique o nome do cliente.');
+        if (!isRack && area <= 0) return alert('Por favor, indique a área da obra.');
+
+        const total = calculateTotal();
 
         const work = {
-            id: Date.now(), client, phone, location: locationStr, area, total, paid,
+            id: Date.now(),
+            client,
+            phone,
+            location: locationStr,
+            area: isRack ? 0 : area,
+            total,
+            paid,
             date: new Date().toLocaleDateString('pt-PT'),
-            materialType: document.getElementById('material').options[document.getElementById('material').selectedIndex].text,
-            unitPrice: parseInt(document.getElementById('material').value)
+            materialType: select.options[select.selectedIndex].text,
+            unitPrice: parseInt(select.value)
         };
 
         appData.works.unshift(work);
@@ -579,10 +590,10 @@
         
         const list = document.getElementById('recent-works-list');
         list.innerHTML = appData.works.slice(0, 5).map(w => `
-            <div class="bg-obsidian-card p-4 rounded-xl border border-obsidian-border flex justify-between items-center group active:scale-[0.98] transition-all" onclick="openWorkDetails(${w.id})">
+            <div class="bg-obsidian-card p-4 rounded-xl border border-obsidian-border flex justify-between items-center group active:scale-[0.98] transition-all cursor-pointer" onclick="openWorkDetails(${w.id})">
                 <div>
                     <h4 class="text-sm font-bold text-white">${w.client}</h4>
-                    <p class="text-[10px] text-white/40 uppercase tracking-tighter">${w.location} • ${formatNum(w.area)}m²</p>
+                    <p class="text-[10px] text-white/40 uppercase tracking-tighter">${w.location || 'Sem localização'} • ${formatNum(w.area)}m²</p>
                 </div>
                 <div class="text-right">
                     <p class="text-sm font-black text-gold">${formatKz(w.total)}</p>
@@ -595,8 +606,9 @@
     function openWorkDetails(id) {
         selectedWorkId = id;
         const work = appData.works.find(w => w.id === id);
+        if (!work) return;
         document.getElementById('modal-client-name').innerText = work.client;
-        document.getElementById('modal-location').innerText = work.location;
+        document.getElementById('modal-location').innerText = work.location || 'N/A';
         document.getElementById('modal-area').innerText = formatNum(work.area);
         document.getElementById('modal-total').innerText = formatKz(work.total);
         document.getElementById('modal-debt').innerText = formatKz(work.total - work.paid);
@@ -614,12 +626,13 @@
     }
 
     function renderReceipts() {
-        const debt = appData.works.reduce((a, b) => a + (b.total - b.paid), 0);
-        document.getElementById('totalDebtDisplay').innerText = formatNum(debt);
+        const totalDebt = appData.works.reduce((a, b) => a + (b.total - b.paid), 0);
+        document.getElementById('totalDebtDisplay').innerText = formatNum(totalDebt);
         
         const list = document.getElementById('receipts-list');
         list.innerHTML = appData.works.map(w => {
-            const hasDebt = (w.total - w.paid) > 10;
+            const debt = w.total - w.paid;
+            const hasDebt = debt > 10;
             return `
             <div class="bg-obsidian-surface p-5 rounded-2xl border border-white/5 flex flex-col gap-4">
                 <div class="flex justify-between items-start">
@@ -631,18 +644,19 @@
                         <p class="text-xs font-bold ${hasDebt ? 'text-red-400' : 'text-green-400'}">
                             ${hasDebt ? 'EM DÍVIDA' : 'LIQUIDADO'}
                         </p>
+                        ${hasDebt ? `<p class="text-[10px] text-red-400/60 font-bold">${formatKz(debt)}</p>` : ''}
                     </div>
                 </div>
                 <div class="flex gap-2">
-                    <button class="flex-1 bg-white/5 py-3 rounded-xl text-[9px] font-black uppercase tracking-widest border border-white/10" onclick="openWorkDetails(${w.id})">VER DETALHES</button>
+                    <button class="flex-1 bg-white/5 py-3 rounded-xl text-[9px] font-black uppercase tracking-widest border border-white/10" onclick="openWorkDetails(${w.id})">DETALHES</button>
                     ${hasDebt ? `
-                        <button class="flex-1 bg-gold text-obsidian py-3 rounded-xl text-[9px] font-black uppercase tracking-widest" onclick="settleDebt(${w.id})">QUITAR DÍVIDA</button>
+                        <button class="flex-1 bg-gold text-obsidian py-3 rounded-xl text-[9px] font-black uppercase tracking-widest" onclick="settleDebt(${w.id})">QUITAR</button>
                     ` : `
-                        <button class="flex-1 bg-gold/10 text-gold py-3 rounded-xl text-[9px] font-black uppercase tracking-widest border border-gold/10" onclick="generateInvoice(${w.id})">GERAR FATURA</button>
+                        <button class="flex-1 bg-gold/10 text-gold py-3 rounded-xl text-[9px] font-black uppercase tracking-widest border border-gold/10" onclick="generateInvoice(${w.id})">FATURA</button>
                     `}
                 </div>
             </div>
-        `}).join('');
+        `}).join('') || '<div class="text-center py-10 opacity-20 text-xs uppercase">Sem registros financeiros</div>';
     }
 
     function renderShoppingList() {
@@ -695,12 +709,15 @@
     }
 
     function addMember() {
-        const name = document.getElementById('memberName').value;
-        const role = document.getElementById('memberRole').value;
-        if (!name) return;
+        const nameInput = document.getElementById('memberName');
+        const roleInput = document.getElementById('memberRole');
+        const name = nameInput.value.trim();
+        const role = roleInput.value;
+        if (!name) return alert('Por favor, insira o nome do colaborador.');
+        
         teamData.push({ id: Date.now(), name, role });
         localStorage.setItem(TEAM_KEY, JSON.stringify(teamData));
-        document.getElementById('memberName').value = '';
+        nameInput.value = '';
         renderTeam();
     }
 
@@ -719,10 +736,10 @@
                     <div class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-lg">👷🏽‍♂️</div>
                     <div>
                         <h4 class="text-sm font-bold text-white">${m.name}</h4>
-                        <p class="text-[10px] uppercase tracking-widest ${m.role === 'Diretor Geral' ? 'text-gold' : 'text-white/30'}">${m.role}</p>
+                        <p class="text-[10px] uppercase tracking-widest ${m.role === 'Diretor Geral' ? 'text-gold font-bold' : 'text-white/30'}">${m.role}</p>
                     </div>
                 </div>
-                <button onclick="removeMember(${m.id})" class="text-white/20 hover:text-red-500">
+                <button onclick="removeMember(${m.id})" class="text-white/20 hover:text-red-500 transition-colors">
                     <span class="material-symbols-outlined">delete</span>
                 </button>
             </div>
@@ -730,25 +747,23 @@
     }
 
     function checkDebts() {
-        const hasDebts = appData.works.some(w => (w.total - w.paid) > 10);
+        const debts = appData.works.filter(w => (w.total - w.paid) > 10);
         const dot = document.getElementById('pending-alert-dot');
         const icon = document.getElementById('notification-icon');
-        if (hasDebts) {
+        if (debts.length > 0) {
             dot.classList.remove('hidden');
             icon.classList.add('text-coral', 'pulse-alert');
-            renderNotifications();
         } else {
             dot.classList.add('hidden');
             icon.classList.remove('text-coral', 'pulse-alert');
-            renderNotifications();
         }
+        renderNotifications(debts);
     }
 
-    function renderNotifications() {
+    function renderNotifications(debts) {
         const list = document.getElementById('notifications-list');
-        const debts = appData.works.filter(w => (w.total - w.paid) > 10);
-        if (debts.length === 0) {
-            list.innerHTML = '<p class="text-center text-xs opacity-40 py-10">SEM NOTIFICAÇÕES</p>';
+        if (!debts || debts.length === 0) {
+            list.innerHTML = '<p class="text-center text-xs opacity-40 py-10">SEM NOTIFICAÇÕES PENDENTES</p>';
             return;
         }
         list.innerHTML = debts.map(w => `
@@ -767,24 +782,33 @@
 
     function sendWhatsApp() {
         const work = appData.works.find(w => w.id === selectedWorkId);
-        const phoneStr = work.phone ? ` (${work.phone})` : '';
-        const msg = `Olá ${work.client}${phoneStr}, aqui é da C&N Acabamentos. Orçamento para obra em ${work.location}: Total de ${formatKz(work.total)}. (Válido por 5 dias). Drywall Pro APP.`;
+        if (!work) return;
+        const msg = `Olá ${work.client}, aqui é da C&N Acabamentos. Orçamento para obra em ${work.location || 'seu local'}: Total de ${formatKz(work.total)}. (Válido por 5 dias). Drywall Pro APP.`;
         
         const cleanPhone = work.phone ? work.phone.replace(/\D/g, '') : '';
         const url = cleanPhone ? `https://wa.me/${cleanPhone}?text=${encodeURIComponent(msg)}` : `https://wa.me/?text=${encodeURIComponent(msg)}`;
         window.open(url);
     }
 
+    function generateInvoiceFromModal() {
+        if (selectedWorkId) {
+            closeModal('work-details-modal');
+            generateInvoice(selectedWorkId);
+        }
+    }
+
     function generateInvoice(id) {
-        const work = appData.works.find(w => w.id === (id || selectedWorkId));
+        const work = appData.works.find(w => w.id === id);
+        if (!work) return;
+
         const subtotal = work.total / 1.14;
         const iva = work.total - subtotal;
         
         const html = `
             <div style="padding: 10px;">
                 <div style="background-color: #4472c4; color: white; display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; margin-bottom: 20px;">
-                    <span style="font-weight: 800; font-size: 18px;">C&N ACABAMENTO LDA & J.QUISSAMA</span>
-                    <span style="font-weight: 800; font-size: 18px;">FATURA</span>
+                    <span style="font-weight: 800; font-size: 18px; font-family: sans-serif;">C&N ACABAMENTO LDA & J.QUISSAMA</span>
+                    <span style="font-weight: 800; font-size: 18px; font-family: sans-serif;">FATURA</span>
                 </div>
                 
                 <div style="margin-bottom: 30px; font-size: 11px;">
@@ -797,13 +821,13 @@
                     <div>
                         <p style="font-weight: bold; color: black; margin-bottom: 4px;">Cobrar a</p>
                         <p>${work.client}</p>
-                        <p>${work.location}</p>
+                        <p>${work.location || 'Localização Não Indicada'}</p>
                         <p>${work.phone || 'Sem telemóvel'}</p>
                     </div>
                     <div>
                         <p style="font-weight: bold; color: black; margin-bottom: 4px;">Enviar para</p>
                         <p>${work.client}</p>
-                        <p>${work.location}</p>
+                        <p>${work.location || 'Localização Não Indicada'}</p>
                     </div>
                     <div style="text-align: right;">
                         <table style="width: 100%; border-collapse: collapse;">
@@ -817,36 +841,4 @@
 
                 <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; border: 1px solid #ddd; font-size: 11px;">
                     <thead>
-                        <tr style="background-color: #f9f9f9; border-bottom: 1px solid #ddd;">
-                            <th style="padding: 10px; text-align: left; width: 60px;">QTD</th>
-                            <th style="padding: 10px; text-align: left;">DESCRIÇÃO</th>
-                            <th style="padding: 10px; text-align: right; width: 120px;">PREÇO POR UNIDADE</th>
-                            <th style="padding: 10px; text-align: right; width: 120px;">VALOR</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr style="border-bottom: 1px solid #eee;">
-                            <td style="padding: 10px; text-align: center;">${formatNum(work.area)} m²</td>
-                            <td style="padding: 10px;">${work.materialType}</td>
-                            <td style="padding: 10px; text-align: right;">${formatNum(work.unitPrice)}</td>
-                            <td style="padding: 10px; text-align: right;">${formatNum(work.area * work.unitPrice)}</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <div style="display: flex; justify-content: flex-end; margin-bottom: 60px;">
-                    <div style="width: 250px; font-size: 12px;">
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
-                            <span style="font-weight: bold;">Subtotal</span>
-                            <span>${formatNum(subtotal)}</span>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-                            <span style="font-weight: bold;">IVA 14.0%</span>
-                            <span>${formatNum(iva)}</span>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; align-items: center; border-top: 2px solid #ddd; padding-top: 10px;">
-                            <span style="font-weight: 900; font-size: 16px;">TOTAL</span>
-                            <span style="font-weight: 900; font-size: 18px; background: #f4f4f4; padding: 4px 10px; border-radius: 4px;">${formatNum(work.total)} Kz</span>
-                        </div>
-                    </div>
-                </div></script></body></html>
+                        <tr style="background-color: #f9f</script></body></html>
